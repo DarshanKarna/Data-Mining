@@ -1,0 +1,67 @@
+[23:43:49] load / clean / link
+[23:44:18] E1/E2/E7 bench
+[23:44:18] minsup 0.04 apriori  standard median 0.01s itemsets 47 rules 0 mem 1.4MiB
+[23:44:22] minsup 0.04 fpgrowth standard median 0.39s itemsets 47 rules 0 mem 20.7MiB
+[23:44:23] minsup 0.04 apriori  retained median 0.02s itemsets 45 rules 0 mem 1.4MiB
+[23:44:27] minsup 0.04 fpgrowth retained median 0.40s itemsets 45 rules 0 mem 20.4MiB
+[23:44:27] minsup 0.03 apriori  standard median 0.02s itemsets 96 rules 3 mem 1.4MiB
+[23:44:33] minsup 0.03 fpgrowth standard median 0.60s itemsets 96 rules 3 mem 27.2MiB
+[23:44:34] minsup 0.03 apriori  retained median 0.05s itemsets 94 rules 3 mem 1.4MiB
+[23:44:39] minsup 0.03 fpgrowth retained median 0.51s itemsets 94 rules 3 mem 26.8MiB
+[23:44:39] minsup 0.02 apriori  standard median 0.07s itemsets 255 rules 23 mem 1.6MiB
+[23:44:49] minsup 0.02 fpgrowth standard median 0.99s itemsets 255 rules 23 mem 41.9MiB
+[23:44:50] minsup 0.02 apriori  retained median 0.11s itemsets 252 rules 23 mem 2.2MiB
+[23:45:00] minsup 0.02 fpgrowth retained median 1.11s itemsets 252 rules 23 mem 41.5MiB
+[23:45:01] minsup 0.015 apriori  standard median 0.16s itemsets 472 rules 51 mem 2.7MiB
+[23:45:17] minsup 0.015 fpgrowth standard median 1.95s itemsets 472 rules 51 mem 54.9MiB
+[23:45:19] minsup 0.015 apriori  retained median 0.30s itemsets 465 rules 50 mem 3.5MiB
+[23:45:34] minsup 0.015 fpgrowth retained median 1.90s itemsets 465 rules 50 mem 54.2MiB
+[23:45:37] minsup 0.01 apriori  standard median 0.59s itemsets 1000 rules 270 mem 4.4MiB
+[23:46:02] minsup 0.01 fpgrowth standard median 3.30s itemsets 1000 rules 270 mem 70.4MiB
+[23:46:08] minsup 0.01 apriori  retained median 1.15s itemsets 992 rules 266 mem 6.0MiB
+[23:46:33] minsup 0.01 fpgrowth retained median 3.40s itemsets 992 rules 266 mem 69.8MiB
+[23:46:39] minsup 0.0075 apriori  standard median 1.18s itemsets 1678 rules 724 mem 6.0MiB
+[23:47:13] minsup 0.0075 fpgrowth standard median 4.73s itemsets 1678 rules 724 mem 79.5MiB
+[23:47:23] minsup 0.0075 apriori  retained median 2.09s itemsets 1655 rules 714 mem 8.1MiB
+[23:47:57] minsup 0.0075 fpgrowth retained median 4.61s itemsets 1655 rules 714 mem 78.7MiB
+[23:48:09] minsup 0.005 apriori  standard median 2.32s itemsets 3761 rules 2638 mem 9.1MiB
+[23:48:58] minsup 0.005 fpgrowth standard median 7.30s itemsets 3761 rules 2638 mem 90.1MiB
+[23:49:19] minsup 0.005 apriori  retained median 4.41s itemsets 3709 rules 2588 mem 13.1MiB
+[23:50:09] minsup 0.005 fpgrowth retained median 7.32s itemsets 3709 rules 2588 mem 89.2MiB
+[23:50:27] minsup 0.004 apriori  standard median 3.30s itemsets 5979 rules 5303 mem 11.5MiB
+[23:51:27] minsup 0.004 fpgrowth standard median 8.59s itemsets 5979 rules 5303 mem 94.4MiB
+[23:51:58] minsup 0.004 apriori  retained median 6.34s itemsets 5881 rules 5192 mem 20.9MiB
+[23:52:58] minsup 0.004 fpgrowth retained median 8.76s itemsets 5881 rules 5192 mem 98.3MiB
+[23:53:28] minsup 0.003 apriori  standard median 4.93s itemsets 11567 rules 16850 mem 22.5MiB
+[23:54:49] minsup 0.003 fpgrowth standard median 12.19s itemsets 11567 rules 16850 mem 100.4MiB
+[23:55:38] minsup 0.003 apriori  retained median 9.29s itemsets 11379 rules 16720 mem 41.3MiB
+[23:56:59] minsup 0.003 fpgrowth retained median 11.99s itemsets 11379 rules 16720 mem 113.0MiB
+[23:56:59] mlxtend reference
+[23:57:00] mlxtend apriori 0.04: 0.36s 47 itemsets
+[23:57:02] mlxtend apriori 0.03: 0.43s 96 itemsets
+[23:57:05] mlxtend apriori 0.02: 0.83s 255 itemsets
+[23:57:10] mlxtend apriori 0.015: 1.69s 472 itemsets
+[23:57:22] mlxtend apriori 0.01: 3.99s 1000 itemsets
+[23:57:39] mlxtend apriori 0.0075: 6.06s 1678 itemsets
+[23:58:13] mlxtend apriori 0.005: 11.46s 3761 itemsets
+[23:59:01] mlxtend apriori 0.004: 16.37s 5979 itemsets
+[00:00:20] mlxtend apriori 0.003: 26.59s 11567 itemsets
+[00:00:23] mlxtend fpgrowth 0.04: 0.95s 47 itemsets
+[00:00:27] mlxtend fpgrowth 0.03: 1.11s 96 itemsets
+[00:00:32] mlxtend fpgrowth 0.02: 1.64s 255 itemsets
+[00:00:39] mlxtend fpgrowth 0.015: 2.20s 472 itemsets
+[00:00:48] mlxtend fpgrowth 0.01: 2.91s 1000 itemsets
+[00:01:01] mlxtend fpgrowth 0.0075: 3.99s 1678 itemsets
+[00:01:17] mlxtend fpgrowth 0.005: 4.94s 3761 itemsets
+[00:01:34] mlxtend fpgrowth 0.004: 5.65s 5979 itemsets
+[00:01:56] mlxtend fpgrowth 0.003: 7.01s 11567 itemsets
+[00:01:56] E3 output change
+[00:02:00] main operating point
+[00:02:09] E4 return rates
+[00:02:09] E5 hold-out
+[00:02:10] E6 sensitivity
+[00:02:21] E6 full_customers: {'variant': 'full_customers', 'policy': 'full', 'anonymous_included': False, 'train_baskets': 18192, 'holdout_baskets': 18405, 'line_return_rate_train': 0.008320343767114657, 'itemsets_baseline': 3761, 'itemsets_return_aware': 3709, 'itemsets_dropped': 52, 'rules_baseline': 2638, 'rules_return_aware': 2588, 'rules_only_baseline': 58, 'rules_only_return_aware': 8, 'top20_overlap': 1.0, 'kendall_tau': 0.9830504448270326, 'holdout_top20_share_baseline': 1.0, 'holdout_top20_share_return_aware': 1.0, 'jaccard_ra_rules_vs_default': 1.0}
+[00:02:30] E6 any_customers: {'variant': 'any_customers', 'policy': 'any', 'anonymous_included': False, 'train_baskets': 18192, 'holdout_baskets': 18405, 'line_return_rate_train': 0.021983085478367137, 'itemsets_baseline': 3761, 'itemsets_return_aware': 3491, 'itemsets_dropped': 270, 'rules_baseline': 2638, 'rules_return_aware': 2310, 'rules_only_baseline': 338, 'rules_only_return_aware': 10, 'top20_overlap': 0.75, 'kendall_tau': 0.9516023819589621, 'holdout_top20_share_baseline': 1.0, 'holdout_top20_share_return_aware': 1.0, 'jaccard_ra_rules_vs_default': 0.8852963818321786}
+[00:02:46] E6 full_with_anonymous: {'variant': 'full_with_anonymous', 'policy': 'full', 'anonymous_included': True, 'train_baskets': 19743, 'holdout_baskets': 19776, 'line_return_rate_train': 0.006655630115462552, 'itemsets_baseline': 7917, 'itemsets_return_aware': 7836, 'itemsets_dropped': 81, 'rules_baseline': 5035, 'rules_return_aware': 4979, 'rules_only_baseline': 71, 'rules_only_return_aware': 15, 'top20_overlap': 1.0, 'kendall_tau': 0.9862676466116711, 'holdout_top20_share_baseline': 1.0, 'holdout_top20_share_return_aware': 1.0, 'jaccard_ra_rules_vs_default': 0.4080759211016003}
+[00:03:01] E6 any_with_anonymous: {'variant': 'any_with_anonymous', 'policy': 'any', 'anonymous_included': True, 'train_baskets': 19743, 'holdout_baskets': 19776, 'line_return_rate_train': 0.017584764504429362, 'itemsets_baseline': 7917, 'itemsets_return_aware': 7468, 'itemsets_dropped': 449, 'rules_baseline': 5035, 'rules_return_aware': 4471, 'rules_only_baseline': 603, 'rules_only_return_aware': 39, 'top20_overlap': 0.7, 'kendall_tau': 0.9495703621627472, 'holdout_top20_share_baseline': 1.0, 'holdout_top20_share_return_aware': 1.0, 'jaccard_ra_rules_vs_default': 0.41860932475884244}
+[00:03:01] done in 1151s, run 20261029-234349-default

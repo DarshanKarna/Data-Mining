@@ -1,0 +1,8 @@
+{
+  "baskets": 36597,
+  "train": 18192,
+  "holdout": 18405,
+  "holdout_censored": 11829,
+  "censor_cutoff": "2011-09-10 12:50:00",
+  "items": 4621
+}

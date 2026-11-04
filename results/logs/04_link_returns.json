@@ -1,0 +1,76 @@
+{
+  "cancellation_lines": 17974,
+  "status_counts": {
+    "linked": 15933,
+    "unlinked": 1924,
+    "partially_linked": 117
+  },
+  "reason_counts": [
+    {
+      "status": "partially_linked",
+      "reason": "quantity_exceeds_earlier_purchases",
+      "n": 117
+    },
+    {
+      "status": "unlinked",
+      "reason": "earlier_purchases_already_used",
+      "n": 58
+    },
+    {
+      "status": "unlinked",
+      "reason": "no_customer",
+      "n": 332
+    },
+    {
+      "status": "unlinked",
+      "reason": "no_earlier_purchase",
+      "n": 498
+    },
+    {
+      "status": "unlinked",
+      "reason": "no_purchase_of_code",
+      "n": 1036
+    }
+  ],
+  "cancelled_quantity_total": 469882,
+  "allocated_quantity_total": 451890,
+  "allocations": 16346,
+  "cancellation_lines_split_over_multiple_purchases": 249,
+  "lag_days_allocation_weighted_by_line": {
+    "count": 16346,
+    "mean": 33.82329451989614,
+    "min": 0.0006944444444444445,
+    "max": 655.8958333333334,
+    "q10": 0.9572916666666667,
+    "q25": 4.9508680555555555,
+    "q50": 10.914583333333333,
+    "q75": 32.99565972222222,
+    "q90": 90.15555555555555,
+    "q95": 154.59184027777778,
+    "q99": 340.1538888888875,
+    "share_le_1d": 0.10351156246176435,
+    "share_le_7d": 0.35458216077327787,
+    "share_le_30d": 0.7380398874342347,
+    "share_le_90d": 0.8997308209959624,
+    "share_le_180d": 0.961703168971002,
+    "share_le_365d": 0.9929034626208246
+  },
+  "policy_full": {
+    "basket_items": 766150,
+    "items_returned": 5872,
+    "item_return_rate": 0.0076642955034914835,
+    "baskets": 36597,
+    "baskets_with_a_returned_item": 2849,
+    "share_baskets_affected": 0.07784791103095882,
+    "items_with_partial_allocation": 9782
+  },
+  "policy_any": {
+    "basket_items": 766150,
+    "items_returned": 15654,
+    "item_return_rate": 0.020432030281276513,
+    "baskets": 36597,
+    "baskets_with_a_returned_item": 7001,
+    "share_baskets_affected": 0.19129983331967101,
+    "items_with_partial_allocation": 9782
+  }
+}

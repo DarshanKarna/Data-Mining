@@ -1,0 +1,52 @@
+{
+  "steps": [
+    {
+      "step": "drop_sheet_overlap",
+      "rows_before": 1067371,
+      "rows_after": 1044848,
+      "removed": 22523
+    },
+    {
+      "step": "drop_invoice_prefix_other_than_C",
+      "rows_before": 1044848,
+      "rows_after": 1044842,
+      "removed": 6
+    },
+    {
+      "step": "drop_missing_description",
+      "rows_before": 1044842,
+      "rows_after": 1040567,
+      "removed": 4275
+    },
+    {
+      "step": "drop_non_product_codes",
+      "rows_before": 1040567,
+      "rows_after": 1034796,
+      "removed": 5771
+    },
+    {
+      "step": "drop_stock_adjustments_price_le0_no_customer",
+      "rows_before": 1034796,
+      "rows_after": 1033123,
+      "removed": 1673
+    }
+  ],
+  "rows_neither_purchase_nor_cancellation": 0,
+  "cancellation_rows_with_positive_quantity": 0,
+  "purchases": {
+    "rows": 1015149,
+    "invoices": 39519,
+    "rows_with_customer": 788267,
+    "invoices_with_customer": 36597,
+    "rows_without_customer": 226882,
+    "invoices_without_customer": 2922,
+    "invoices_mixed_customer_and_missing": 0
+  },
+  "cancellations": {
+    "rows": 17974,
+    "invoices": 7406,
+    "rows_with_customer": 17642,
+    "rows_without_customer": 332
+  },
+  "exact_duplicate_purchase_rows_kept": 11731
+}
