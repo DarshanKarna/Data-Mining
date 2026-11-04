@@ -1,0 +1,5 @@
+variant,policy,anonymous_included,train_baskets,holdout_baskets,line_return_rate_train,itemsets_baseline,itemsets_return_aware,itemsets_dropped,rules_baseline,rules_return_aware,rules_only_baseline,rules_only_return_aware,top20_overlap,kendall_tau,holdout_top20_share_baseline,holdout_top20_share_return_aware,jaccard_ra_rules_vs_default
+full_customers,full,False,18192,18405,0.008320343767114657,3761,3709,52,2638,2588,58,8,1.0,0.9830504448270326,1.0,1.0,1.0
+any_customers,any,False,18192,18405,0.021983085478367137,3761,3491,270,2638,2310,338,10,0.75,0.9516023819589621,1.0,1.0,0.8852963818321786
+full_with_anonymous,full,True,19743,19776,0.006655630115462552,7917,7836,81,5035,4979,71,15,1.0,0.9862676466116711,1.0,1.0,0.4080759211016003
+any_with_anonymous,any,True,19743,19776,0.017584764504429362,7917,7468,449,5035,4471,603,39,0.7,0.9495703621627472,1.0,1.0,0.41860932475884244

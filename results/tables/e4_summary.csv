@@ -1,0 +1,2 @@
+minsup,line_return_rate_train,high_rr_threshold,high_rr_multiplier,itemsets,itemsets_rr_zero,itemsets_high_rr,itemsets_size2plus,itemsets_size2plus_high_rr,rr_mean,rr_median,rr_q90,rr_max,rules_baseline,rules_baseline_high_rr,share_rules_baseline_high_rr
+0.005,0.008320343767114657,0.016640687534229315,2.0,3761,1722,426,2595,289,0.007243289792772891,0.003831417624521105,0.017699115044247815,0.31999999999999995,2638,174,0.06595905989385899

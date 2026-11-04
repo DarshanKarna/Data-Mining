@@ -1,0 +1,34 @@
+quantity,value
+raw rows (both sheets),1067371
+rows after removing the duplicated sheet block,1044848
+purchase lines after cleaning,1015149
+purchase invoices after cleaning,39519
+purchase lines with Customer ID,788267
+purchase invoices with Customer ID (baskets),36597
+purchase invoices without Customer ID (excluded),2922
+customers,5853
+items (stock codes) in baskets,4621
+cancellation lines,17974
+cancellation lines linked,15933
+cancellation lines partially linked,117
+cancellation lines unlinked,1924
+first invoice date,2009-12-01 07:45:00
+last invoice date,2011-12-09 12:50:00
+baskets (all),36597
+basket size mean (all),20.93
+basket size median (all),15.0
+basket size max (all),540
+line return rate (all),0.00766
+baskets with a returned item (all),2849
+baskets (train),18192
+basket size mean (train),20.88
+basket size median (train),16.0
+basket size max (train),250
+line return rate (train),0.00832
+baskets with a returned item (train),1614
+baskets (hold-out),18405
+basket size mean (hold-out),20.99
+basket size median (hold-out),15.0
+basket size max (hold-out),540
+line return rate (hold-out),0.00702
+baskets with a returned item (hold-out),1235
