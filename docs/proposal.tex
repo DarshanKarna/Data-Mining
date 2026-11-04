@@ -1,0 +1,166 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1.9cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[compress]{cite}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{9pt}{4pt}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\titlespacing*{\subsection}{0pt}{6pt}{2pt}
+\setlist{nosep,leftmargin=1.4em}
+\setlength{\parskip}{3pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\Sup}{\mathrm{sup}}
+\newcommand{\RSup}{\mathrm{rsup}}
+
+\begin{document}
+
+\begin{center}
+{\small COSC-3026-F01: Data Mining and Data Warehousing \quad Project Proposal (P1)}\\[6pt]
+{\Large\bfseries Return-Aware Support for Apriori and FP-Growth\\[2pt] on Online Retail Transactions}\\[8pt]
+Student Name 1 \quad and \quad Student Name 2
+\end{center}
+
+\section*{Abstract}
+
+Online retailers use frequent itemset mining to find products that customers buy together. The support measure behind Apriori~\cite{agrawal1994} and FP-Growth~\cite{han2000} counts every item in a basket at checkout, so an item the customer later sends back still counts as a purchase. This project measures how much returns change the itemsets and association rules that these two algorithms report. We use Online Retail II~\cite{uci_oretail2}, a public dataset of 1,067,371 invoice lines from a UK online retailer, recorded between 1 December 2009 and 9 December 2011. The dataset stores cancellations as separate invoices in the same table as purchases.
+
+We plan two experiments on the same data. In the first, we run both algorithms as published, after the usual cleaning step that discards cancelled invoices. In the second, we link each cancellation line to the purchase it reverses and replace support with \emph{retained support}: the share of baskets in which a customer bought every item of an itemset and kept all of them. Retained support never increases when an itemset grows, so both algorithms keep their pruning rules. Our objectives are to (i)~build a reproducible step that links cancellations to purchases, (ii)~implement baseline and return-aware versions of both algorithms, and (iii)~compare the versions on runtime, memory, the itemsets and rules they report, and how well their top rules hold on a later hold-out period. We expect to deliver code, result tables and charts, and a rule list that flags product bundles with high return rates.
+
+\section*{Problem Description}
+
+In the standard formulation, the support of an itemset $X$ is the fraction of transactions that contain $X$, and the miner reports a rule $A \Rightarrow B$ when $A \cup B$ meets a minimum support and the rule meets a minimum confidence~\cite{agrawal1994}. A transaction here is a basket as it stood at checkout. Returns happen later. In Online Retail II, an invoice number that begins with the letter C marks a cancellation~\cite{uci_oretail2}, and the cancellation appears as its own record, separate from the original purchase.
+
+Public market basket analyses of this retailer's data can drop these records before mining. One public example removes returns and cancelled orders from the earlier one-year release, keeping 396,470 of 541,909 rows, and then runs Apriori~\cite{gh_mba}. After this step the original purchase line remains in the data. An itemset that customers often buy and then return therefore looks as strong as one they keep, and a retailer who builds a bundle or a cross-selling suggestion on it promotes purchases that come back.
+
+Returns carry real cost for online retailers. Karl~\cite{karl2025}, citing the National Retail Federation and Appriss Retail, reports that US consumers returned \$212 billion of merchandise bought online in 2022, equal to 16.5\% of online sales. Duong et al.~\cite{duong2022} treat returns as an inevitable cost of doing business and single out online marketplaces.
+
+The work on returns that we reviewed follows two main directions. One forecasts return decisions or return volumes~\cite{karl2025,li2018,shang2020}. The other studies returns management as a supply chain process~\cite{ambilkar2022}. In pattern mining, utility-based methods weight items by values such as profit or quantity~\cite{gan2021}. We did not find work that changes the support counting of Apriori or FP-Growth to account for linked returns. The closest study we found, by Mei{\ss}ner et al.~\cite{meissner2022}, applies frequent itemset mining together with time series clustering, forecasting and scoring to returns data from an online furniture shop. That study mines the return records themselves, looking for return characteristics whose behavior over time stands out. Our project keeps the purchase baskets as the unit of analysis and asks which co-purchase patterns survive after returns.
+
+\section*{Motivation}
+
+We chose this problem because the data to answer it already sits in the dataset, in rows that basket analyses can discard. Online Retail II is real transaction data, licensed under CC BY 4.0, and records purchases and cancellations in one table~\cite{uci_oretail2}. Chen et al.~\cite{chen2012} used the earlier one-year release of the same retailer's data for RFM-based customer segmentation. The retailer mainly sells all-occasion giftware, and many of its customers are wholesalers~\cite{uci_oretail2}. We expect wholesale orders to produce larger baskets than typical consumer orders, which gives the mining step more co-purchases to work with.
+
+The problem is challenging for three reasons.
+\begin{enumerate}
+  \item A cancellation line gives a customer number, a stock code, a quantity and a date, but no reference to the original invoice~\cite{uci_oretail2}. We must infer that link. The dataset also has missing values~\cite{uci_oretail2}, and a line without a customer number cannot be linked at all.
+  \item A modified support measure has to keep the downward-closure property, or Apriori pruning stops being correct. Utility measures, for example, are neither monotone nor anti-monotone, and utility mining needs extra upper-bound techniques as a result~\cite{gan2021}.
+  \item FP-Growth stores transactions in a compressed prefix tree~\cite{han2000}. A second count has to work with that structure without building a second full tree.
+\end{enumerate}
+
+A solution would help retailers who use association rules for bundles, product placement and promotions, because it separates patterns customers keep from patterns they reverse. It would also help students and analysts who work with this dataset, since it turns the discarded cancellation rows into usable signal. Researchers who forecast returns from basket contents could use itemset return rates as an extra input. Li et al.~\cite{li2018}, for instance, predict return intention from basket composition using a hypergraph of past purchase and return records.
+
+\section*{Solution Statement and Technology}
+
+\subsection*{Algorithms}
+
+We implement two frequent itemset mining algorithms. Apriori~\cite{agrawal1994} generates candidate itemsets level by level and scans the database once per level to count them. It prunes any candidate that has an infrequent subset. FP-Growth~\cite{han2000} scans the database twice to build a prefix tree (the FP-tree) and then mines patterns from conditional pattern bases without generating candidates. We picked these two because they search the itemset space in different ways. If our change gives the same itemsets under both, the effect comes from the measure and not from one search strategy.
+
+\subsection*{Proposed addition: return-aware support}
+
+Let $D$ be the set of purchase baskets and, for a basket $t$, let $k(t) \subseteq t$ be the items in $t$ that the customer did not return. We define
+\begin{align*}
+\Sup(X)  &= \frac{|\{t \in D : X \subseteq t\}|}{|D|}, &
+\RSup(X) &= \frac{|\{t \in D : X \subseteq k(t)\}|}{|D|}, &
+\mathrm{rr}(X) &= 1 - \frac{\RSup(X)}{\Sup(X)}.
+\end{align*}
+Here $\RSup$ is retained support and $\mathrm{rr}$ is the itemset return rate. For rules we use retained confidence, $\mathrm{rconf}(A \Rightarrow B) = \RSup(A \cup B) / \RSup(A)$. If $X \subseteq Y$ and $Y \subseteq k(t)$, then $X \subseteq k(t)$, so $\RSup(Y) \le \RSup(X)$. Retained support is anti-monotone, and both algorithms can prune on it without upper bounds.
+
+The algorithm changes are small. In Apriori, each candidate keeps two counters that we update in the same database pass, one for $t$ and one for $k(t)$, and we prune on the retained counter. In FP-Growth, we build the FP-tree from the kept baskets $k(t)$, so node counts equal retained counts and the mining step runs unchanged. We then compute standard support for each output itemset from bitset transaction lists of the full baskets, which gives $\mathrm{rr}(X)$ without a second tree.
+
+\subsection*{Data preprocessing}
+
+\begin{enumerate}
+  \item Load the dataset with pandas and remove lines with no product description. We will inspect stock codes and descriptions to remove lines that do not describe a product.
+  \item Split lines into purchases and cancellations using the leading C of the invoice number~\cite{uci_oretail2}.
+  \item Link returns. For each cancellation line, find the most recent earlier purchase invoice from the same customer that contains the same stock code, and mark that item in that basket as returned. We will report how many cancellation lines stay unlinked because they lack a customer number or a matching purchase.
+  \item Build one basket per purchase invoice with stock codes as items, plus its kept view $k(t)$.
+  \item Split by date. We mine on the first twelve months (December 2009 to November 2010) and hold out the remaining months to check whether top rules still hold on kept baskets.
+\end{enumerate}
+
+\subsection*{Evaluation plan}
+
+\begin{center}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Comparison & Measures \\
+\midrule
+Baseline vs.\ return-aware (both algorithms) & runtime, peak memory, number of itemsets and rules \\
+Rule lists at each minimum support & top-$k$ overlap, Kendall rank correlation \\
+Return-aware output & distribution of $\mathrm{rr}(X)$, rules flagged as high-return \\
+Hold-out period & share of top-$k$ rules whose retained confidence holds \\
+Apriori vs.\ FP-Growth & identical itemsets under each support measure \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+We will run each configuration over a grid of minimum support values chosen after we inspect item frequencies.
+
+\subsection*{Technology}
+
+We use Python 3 with pandas and NumPy for preprocessing, matplotlib for charts, and SciPy for rank correlation. For the baseline we use the \texttt{apriori} and \texttt{fpgrowth} functions of the mlxtend library~\cite{raschka2018}. We write our own implementations of both algorithms for the return-aware versions, and we check that our implementations match mlxtend on standard support before we add the second counter. Our contribution is the return-linking step, the retained support measure, and the two algorithm changes described above. Bustio-Mart{\'i}nez et al.~\cite{bustio2022} note that mining frequent itemsets in reasonable time on large datasets is still an open problem, so we will report the runtime and memory cost of the extra counter alongside the change in results.
+
+\subsection*{Justification}
+
+The change targets the support measure itself and leaves both search procedures intact, so we can attribute any difference in output to returns alone. Because retained support keeps downward closure, the change avoids the upper-bound machinery that utility mining needs~\cite{gan2021}. The dataset provides both purchases and returns from one real retailer, which lets us test the idea without merging data from separate systems.
+
+\footnotesize
+\begin{thebibliography}{99}
+\setlength{\itemsep}{1pt}
+
+\bibitem{agrawal1994}
+R. Agrawal and R. Srikant, ``Fast algorithms for mining association rules in large databases,'' in \emph{Proc. 20th Int. Conf. Very Large Data Bases (VLDB)}, Santiago, Chile, 1994, pp. 487--499.
+
+\bibitem{han2000}
+J. Han, J. Pei, and Y. Yin, ``Mining frequent patterns without candidate generation,'' in \emph{Proc. ACM SIGMOD Int. Conf. Manage. Data}, Dallas, TX, USA, 2000, pp. 1--12, doi: 10.1145/335191.335372.
+
+\bibitem{uci_oretail2}
+D. Chen, ``Online Retail II,'' UCI Machine Learning Repository, 2012. [Online]. Available: \url{https://doi.org/10.24432/C5CG6D}
+
+\bibitem{gh_mba}
+shahashmi, ``market-basket-analysis,'' GitHub repository. [Online]. Available: \url{https://github.com/shahashmi/market-basket-analysis} (accessed Oct. 23, 2026).
+
+\bibitem{karl2025}
+D. Karl, ``Forecasting e-commerce consumer returns: A systematic literature review,'' \emph{Manage. Rev. Quart.}, vol. 75, no. 3, pp. 1--56, 2025, doi: 10.1007/s11301-024-00436-x.
+
+\bibitem{duong2022}
+Q. H. Duong, L. Zhou, M. Meng, T. V. Nguyen, P. Ieromonachou, and D. T. Nguyen, ``Understanding product returns: A systematic literature review using machine learning and bibliometric analysis,'' \emph{Int. J. Prod. Econ.}, vol. 243, Art. no. 108340, 2022, doi: 10.1016/j.ijpe.2021.108340.
+
+\bibitem{li2018}
+J. Li, J. He, and Y. Zhu, ``E-tail product return prediction via hypergraph-based local graph cut,'' in \emph{Proc. 24th ACM SIGKDD Int. Conf. Knowl. Discovery Data Mining}, 2018, pp. 519--527, doi: 10.1145/3219819.3219829.
+
+\bibitem{shang2020}
+G. Shang, E. C. McKie, M. E. Ferguson, and M. R. Galbreth, ``Using transactions data to improve consumer returns forecasting,'' \emph{J. Oper. Manage.}, vol. 66, no. 3, pp. 326--348, 2020, doi: 10.1002/joom.1071.
+
+\bibitem{ambilkar2022}
+P. Ambilkar, V. Dohale, A. Gunasekaran, and V. Bilolikar, ``Product returns management: A comprehensive review and future research agenda,'' \emph{Int. J. Prod. Res.}, vol. 60, no. 12, pp. 3920--3944, 2022, doi: 10.1080/00207543.2021.1933645.
+
+\bibitem{gan2021}
+W. Gan, J. C.-W. Lin, P. Fournier-Viger, H.-C. Chao, V. S. Tseng, and P. S. Yu, ``A survey of utility-oriented pattern mining,'' \emph{IEEE Trans. Knowl. Data Eng.}, vol. 33, no. 4, pp. 1306--1327, 2021, doi: 10.1109/TKDE.2019.2942594.
+
+\bibitem{meissner2022}
+K. Mei{\ss}ner, A. B. Stevenson, and J. Rieck, ``Identifying non-intuitive relationships within returns data of a furniture online-shop using temporal data mining,'' in \emph{Recent Challenges in Intelligent Information and Database Systems (ACIIDS 2022)}, Commun. Comput. Inf. Sci., vol. 1716. Singapore: Springer, 2022, pp. 299--312, doi: 10.1007/978-981-19-8234-7\_24.
+
+\bibitem{chen2012}
+D. Chen, S. L. Sain, and K. Guo, ``Data mining for the online retail industry: A case study of RFM model-based customer segmentation using data mining,'' \emph{J. Database Marketing Customer Strategy Manage.}, vol. 19, no. 3, pp. 197--208, 2012, doi: 10.1057/dbm.2012.17.
+
+\bibitem{raschka2018}
+S. Raschka, ``MLxtend: Providing machine learning and data science utilities and extensions to Python's scientific computing stack,'' \emph{J. Open Source Softw.}, vol. 3, no. 24, Art. no. 638, 2018, doi: 10.21105/joss.00638.
+
+\bibitem{bustio2022}
+L. Bustio-Mart{\'i}nez, R. Cumplido, M. Letras, R. Hern{\'a}ndez-Le{\'o}n, C. Feregrino-Uribe, and J. Hern{\'a}ndez-Palancar, ``FPGA/GPU-based acceleration for frequent itemsets mining: A comprehensive review,'' \emph{ACM Comput. Surv.}, vol. 54, no. 9, 2022, doi: 10.1145/3472289.
+
+\end{thebibliography}
+
+\end{document}
