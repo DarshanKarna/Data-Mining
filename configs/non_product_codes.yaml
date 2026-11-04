@@ -1,0 +1,30 @@
+# Stock codes that are not products. Dropped in clean.py.
+# Evidence from results/logs/02_inspect.json (scripts/inspect_data.py), checked 2026-10-29.
+# Only codes whose descriptions show a fee, postage, adjustment, test or voucher are listed.
+# Codes outside the 5-digit pattern that describe real goods (DCGS*, SP1002, PADS) are kept.
+codes:
+  POST: {rows: 2122, evidence: "description POSTAGE"}
+  DOT: {rows: 1446, evidence: "description DOTCOM POSTAGE"}
+  M: {rows: 1426, evidence: "description Manual (manual price adjustments)"}
+  C2: {rows: 282, evidence: "description CARRIAGE"}
+  C3: {rows: 1, evidence: "no description, carriage-style code next to C2"}
+  D: {rows: 177, evidence: "description Discount"}
+  S: {rows: 104, evidence: "description SAMPLES"}
+  BANK CHARGES: {rows: 102, evidence: "description Bank Charges"}
+  ADJUST: {rows: 67, evidence: "description Adjustment by <staff> on <date>"}
+  ADJUST2: {rows: 3, evidence: "description Adjustment by Peter on Jun 25 2010"}
+  AMAZONFEE: {rows: 43, evidence: "description AMAZON FEE"}
+  CRUK: {rows: 16, evidence: "description CRUK Commission"}
+  B: {rows: 6, evidence: "description Adjust bad debt, negative price, invoice prefix A"}
+  TEST001: {rows: 15, evidence: "description This is a test product."}
+  TEST002: {rows: 2, evidence: "description This is a test product."}
+  GIFT: {rows: 1, evidence: "no description, voucher code family"}
+  GIFT_0001_10: {rows: 16, evidence: "description Dotcomgiftshop Gift Voucher 10.00"}
+  GIFT_0001_20: {rows: 29, evidence: "description Dotcomgiftshop Gift Voucher 20.00"}
+  GIFT_0001_30: {rows: 29, evidence: "description Dotcomgiftshop Gift Voucher 30.00"}
+  GIFT_0001_40: {rows: 7, evidence: "description Dotcomgiftshop Gift Voucher 40.00"}
+  GIFT_0001_50: {rows: 8, evidence: "description Dotcomgiftshop Gift Voucher 50.00"}
+  GIFT_0001_60: {rows: 2, evidence: "voucher code family, no description"}
+  GIFT_0001_70: {rows: 3, evidence: "description Dotcomgiftshop Gift Voucher 70.00"}
+  GIFT_0001_80: {rows: 4, evidence: "description Dotcomgiftshop Gift Voucher 80.00"}
+  GIFT_0001_90: {rows: 2, evidence: "voucher code family, no description"}

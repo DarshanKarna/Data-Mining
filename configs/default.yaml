@@ -1,0 +1,18 @@
+run_name: default
+partial_return_policy: full
+include_anonymous: false
+minsup_grid: [0.04, 0.03, 0.02, 0.015, 0.01, 0.0075, 0.005, 0.004, 0.003]
+main_minsup: 0.005
+min_conf: 0.5
+top_k: [10, 20, 50]
+repeats: 3
+time_budget_s: 60
+mlxtend_budget_s: 60
+high_rr_multiplier: 2.0
+censor_days: 90
+sensitivity:
+  - {name: full_customers, partial_return_policy: full, include_anonymous: false}
+  - {name: any_customers, partial_return_policy: any, include_anonymous: false}
+  - {name: full_with_anonymous, partial_return_policy: full, include_anonymous: true}
+  - {name: any_with_anonymous, partial_return_policy: any, include_anonymous: true}
+min_holdout_count: 30
