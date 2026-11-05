@@ -56,8 +56,7 @@ Key figures after cleaning (from `results/tables/dataset_summary.csv`):
 | Line return rate | 0.77% |
 
 The workbook has two sheets whose dates overlap (2010-12-01 to 2010-12-09). The copy in
-the first sheet is dropped so those baskets are not counted twice. See `docs/decisions.md`.
-
+the first sheet is dropped so those baskets are not counted twice.
 ## Method
 
 Pipeline steps, each logging counts to `results/logs/`:
@@ -146,8 +145,6 @@ On macOS or Linux use `.venv/bin/python` in place of `.venv\Scripts\python`.
 
 ```
 python -m rafim.run --config configs/default.yaml   # pipeline + experiments E1-E7
-python -m rafim.figures                              # figures from results/tables/
-python report/build_docx.py                          # report.docx + page count
 pytest                                               # correctness gates
 ruff check .                                         # lint
 ```
@@ -181,12 +178,8 @@ The tests in `tests/` are the correctness gates for the experiments:
 | `src/rafim/apriori.py`, `fpgrowth.py` | both miners with `measure = standard / retained` |
 | `src/rafim/rules.py` | rules with conf, rconf, lift, rr |
 | `src/rafim/evaluate.py`, `bench.py`, `run.py` | experiments E1-E7 |
-| `src/rafim/figures.py` | regenerates figures from `results/tables/` |
 | `configs/` | run config and the non-product code list with evidence |
-| `docs/` | `proposal.tex` and `decisions.md` (every decision with its reason) |
-| `results/logs`, `results/tables`, `results/figures` | outputs used in the report |
-| `report/` | `draft.md`, `references.md`, `build_docx.py`, built report |
-| `presentation/outline.md` | 5-minute presentation outline |
+| `results/logs`, `results/tables` | outputs of the pipeline and experiments |
 | `submission/code.zip` | packaged code for Brightspace |
 | `tests/` | linking cases, agreement with mlxtend, property tests |
 
@@ -203,8 +196,7 @@ The tests in `tests/` are the correctness gates for the experiments:
 ## References
 
 The main sources are Agrawal and Srikant (VLDB 1994), Han, Pei and Yin (SIGMOD 2000),
-Chen (UCI, 2012) and Raschka (MLxtend, JOSS 2018). The verified list is in
-`report/references.md`.
+Chen (UCI, 2012) and Raschka (MLxtend, JOSS 2018).
 
 ## Authors
 

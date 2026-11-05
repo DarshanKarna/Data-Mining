@@ -9,3 +9,10 @@ __pycache__/
 results/runs/*/bench_raw.json
 ~$*
 report/.lo_profile/
+
+# Documentation, report and figure tooling (kept locally, not tracked)
+docs/
+report/
+presentation/
+results/figures/
+src/rafim/figures.py
